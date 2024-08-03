@@ -3,7 +3,7 @@ import {
   isVue2,
   isVue3,
   set
-} from "./chunk-G2IU64N3.js";
+} from "./chunk-R6OIM467.js";
 import {
   Fragment,
   TransitionGroup,
@@ -39,7 +39,7 @@ import {
   version,
   watch,
   watchEffect
-} from "./chunk-JCEIXD3K.js";
+} from "./chunk-ERZJ7F2K.js";
 import "./chunk-PZ5AY32C.js";
 
 // node_modules/.pnpm/@vueuse+shared@10.11.0_vue@3.4.34/node_modules/@vueuse/shared/index.mjs

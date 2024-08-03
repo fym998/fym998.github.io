@@ -11,15 +11,19 @@ export default defineConfig({
       // { text: 'Examples', link: '/markdown-examples' }
     ],
 
-    sidebar: [
-      // {
-      //   text: 'Examples',
-      //   items: [
-      //     { text: 'Markdown Examples', link: '/markdown-examples' },
-      //     { text: 'Runtime API Examples', link: '/api-examples' }
-      //   ]
-      // }
-    ],
+    sidebar: {
+      // 当用户位于 `shijian` 目录时，会显示此侧边栏
+      '/shijian/': [
+        {
+          text: '个人网络安全',
+          items: [
+            { text: '社会工程学攻击', link: '/shijian/社会工程学攻击' },
+            { text: '恶意链接', link: '/shijian/恶意链接' },
+            { text: '恶意软件', link: '/shijian/恶意软件' },
+          ]
+        }
+      ],
+    },
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/fym998' }
