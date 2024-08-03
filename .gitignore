@@ -114,8 +114,8 @@ dist
 .vuepress/dist
 
 # vitepress build output
-.vuepress/dist
-.vuepress/cache
+.vitepress/dist
+.vitepress/cache
 
 # vuepress v2.x temp and cache directory
 .temp
