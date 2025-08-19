@@ -42,11 +42,15 @@ export const menuLinks: { path: string; title: string }[] = [
 	},
 	{
 		path: "/posts/",
-		title: "博客",
+		title: "博文",
 	},
 	{
 		path: "/notes/",
-		title: "笔记",
+		title: "小记",
+	},
+	{
+		path: "https://github.com/fym998/fym998.github.io",
+		title: "GitHub",
 	},
 ];
 
