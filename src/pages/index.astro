@@ -1,8 +1,9 @@
 ---
 import { type CollectionEntry, getCollection } from "astro:content";
-import SocialList from "@/components/SocialList.astro";
 import PostPreview from "@/components/blog/PostPreview.astro";
+import GitHubActivityCalendar from "@/components/GitHubActivityCalendar.astro";
 import Note from "@/components/note/Note.astro";
+import SocialList from "@/components/SocialList.astro";
 import { getAllPosts } from "@/data/post";
 import PageLayout from "@/layouts/Base.astro";
 import { collectionDateSort } from "@/utils/date";
@@ -33,6 +34,10 @@ const latestNotes = allNotes.sort(collectionDateSort).slice(0, MAX_NOTES);
 			click on the GitHub icon link below and it will take you to my repo.
 		</p>
 		<SocialList />
+		<section class="mt-8">
+			<h2 class="title text-accent mb-4 text-lg">GitHub activity</h2>
+			<GitHubActivityCalendar username="fym998" />
+		</section>
 	</section>
 	{
 		pinnedPosts.length > 0 && (
