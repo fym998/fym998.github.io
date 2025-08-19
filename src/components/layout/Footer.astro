@@ -7,9 +7,24 @@ const year = new Date().getFullYear();
 <footer
 	class="mt-auto flex w-full flex-col items-center justify-center gap-y-2 pt-20 pb-4 text-center align-top font-semibold text-gray-600 sm:flex-row sm:justify-between sm:text-xs dark:text-gray-400"
 >
-	<div class="me-0 sm:me-4">
-		&copy; {siteConfig.author}
-		{year}.<span class="inline-block">&nbsp;🚀&nbsp;{siteConfig.title}</span>
+	<div class="me-0 flex flex-col flex-wrap sm:me-4 md:flex-row">
+		<span>
+			&copy; {siteConfig.author}
+			{year}
+		</span>
+		<span class="mx-5 hidden md:block"> :: </span>
+		<span>
+			由 <a class="underline" target="_blank" rel="noopener noreferrer" href="https://astro.build"
+				>Astro</a
+			>
+			&
+			<a
+				class="underline"
+				target="_blank"
+				rel="noopener noreferrer"
+				href="https://github.com/chrismwilliams/astro-theme-cactus">Cactus</a
+			> 强力驱动！
+		</span>
 	</div>
 	<nav
 		aria-labelledby="footer_links"
