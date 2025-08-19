@@ -10,21 +10,31 @@ const socialLinks: {
 	friendlyName: string;
 	isWebmention?: boolean;
 	link: string;
-	name: string;
+	iconName: string;
 }[] = [
+	{
+		friendlyName: "Email",
+		link: "mail",
+		iconName: "tabler:mail",
+	},
 	{
 		friendlyName: "Github",
 		link: "https://github.com/fym998",
-		name: "mdi:github",
+		iconName: "tabler:brand-github",
+	},
+	{
+		friendlyName: "bilibili",
+		link: "https://space.bilibili.com/443851006",
+		iconName: "tabler:brand-bilibili",
 	},
 ];
 ---
 
 <div class="flex flex-wrap items-end gap-x-2">
-	<p>Find me on</p>
+	<p class="sr-only">Find me on</p>
 	<ul class="flex flex-1 items-center gap-x-2 sm:flex-initial">
 		{
-			socialLinks.map(({ friendlyName, isWebmention, link, name }) => (
+			socialLinks.map(({ friendlyName, isWebmention, link, iconName: name }) => (
 				<li class="flex">
 					<a
 						class="hover:text-link inline-block"
