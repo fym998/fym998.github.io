@@ -30,7 +30,7 @@ function range(n: number) {
 
 async function fetchData(
 	username: string,
-	year: number | "last",
+	year: number | "last"
 ): Promise<GitHubActivityApiResponse> {
 	function validateActivities(activities: Array<GitHubActivityDay>) {
 		if (activities.length === 0) {
@@ -96,7 +96,7 @@ function fillHoles(activities: Array<GitHubActivityDay>): Array<GitHubActivityDa
 
 function groupByWeeks(
 	activities: Array<GitHubActivityDay>,
-	weekStart: WeekdayIndex = 0, // 0 = Sunday
+	weekStart: WeekdayIndex = 0 // 0 = Sunday
 ): Array<GitHubActivityWeek> {
 	const normalizedActivities = fillHoles(activities);
 	// Determine the first date of the calendar. If the first date is not the
@@ -109,7 +109,7 @@ function groupByWeeks(
 	// because the first date might not be set start weekday.
 	const paddedActivities = [
 		...(Array(differenceInCalendarDays(firstDate, firstCalendarDate)).fill(
-			undefined,
+			undefined
 		) as Array<GitHubActivityDay>),
 		...normalizedActivities,
 	];
@@ -117,13 +117,13 @@ function groupByWeeks(
 
 	// Finally, group activities by week
 	return [...Array(numberOfWeeks).keys()].map((weekIndex) =>
-		paddedActivities.slice(weekIndex * 7, weekIndex * 7 + 7),
+		paddedActivities.slice(weekIndex * 7, weekIndex * 7 + 7)
 	);
 }
 
 function getMonthLabels(
 	weeks: Array<GitHubActivityWeek>,
-	monthNames: Array<string>,
+	monthNames: Array<string>
 ): Array<GitHubActivityMonthLabel> {
 	return weeks
 		.reduce<Array<GitHubActivityMonthLabel>>((labels, week, weekIndex) => {
@@ -162,7 +162,9 @@ const { username, year = "last" } = Astro.props;
 
 const data = await fetchData(username, year);
 
-const themeFromColorscheme: [string, string] = ["var(--theme-background)", "var(--theme-accent)"];
+// Use the theme variables defined in `src/styles/global.css`.
+// The repo defines `--color-global-bg` and `--color-accent`, not `--theme-*`.
+const themeFromColorscheme: [string, string] = ["var(--color-global-bg)", "var(--color-accent)"];
 
 const totalCount = year === "last" ? data.total.lastYear : data.total[year];
 const maxLevel = 4;
@@ -182,6 +184,10 @@ const activities = data.contributions;
 const firstActivity = activities[0];
 const activityYear = getYear(parseISO(firstActivity.date));
 const weeks = groupByWeeks(activities, weekStart);
+// Provide a typed alias for use inside the template so we avoid putting
+// TypeScript annotations inside JSX expressions (Astro's template parser can
+// choke on those). This keeps type safety while preventing parser errors.
+const weeksTyped = weeks as Array<Array<GitHubActivityDay | undefined>>;
 const labels = {
 	months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 	totalCount: `{{count}} contributions in ${year === "last" ? "the last year" : "{{year}}"}`,
@@ -221,7 +227,7 @@ const height = labelHeight + (blockSize + blockMargin) * 7 - blockMargin;
 				)
 			}
 			{
-				weeks.map((week, weekIndex) => (
+				weeksTyped.map((week, weekIndex) => (
 					<g transform={`translate(${(blockSize + blockMargin) * weekIndex}, 0)`}>
 						{week.map((activity, dayIndex) => {
 							if (!activity) return null;
