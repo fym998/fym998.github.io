@@ -83,3 +83,30 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 	themes: ["dracula", "github-light"],
 	useThemedScrollbars: false,
 };
+
+/**
+	Uses https://www.astroicon.dev/getting-started/
+	Find icons via guide: https://www.astroicon.dev/guides/customization/#open-source-icon-sets
+*/
+export const socialLinks: {
+	friendlyName: string;
+	isWebmention?: boolean;
+	link: string;
+	iconName: string;
+}[] = [
+	{
+		friendlyName: "Email",
+		link: "mailto:fujun998@outlook.com",
+		iconName: "tabler:mail",
+	},
+	{
+		friendlyName: "Github",
+		link: "https://github.com/fym998",
+		iconName: "tabler:brand-github",
+	},
+	{
+		friendlyName: "bilibili",
+		link: "https://space.bilibili.com/443851006",
+		iconName: "tabler:brand-bilibili",
+	},
+];
