@@ -41,7 +41,12 @@
 		scroll-margin-block: 5ex;
 	}
 
+	/* View Transitions API: set navigation to auto when supported.
+	   Suppress Biome lint 'lint/correctness/noUnknownProperty' for this property.
+	   Keep the rule active for browsers; the suppression avoids a false-positive lint.
+	*/
 	@view-transition {
+		/* biome-ignore lint/correctness/noUnknownProperty: view-transitions API */
 		navigation: auto;
 	}
 

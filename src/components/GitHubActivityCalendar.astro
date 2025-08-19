@@ -11,13 +11,30 @@ import {
 	parseISO,
 	subWeeks,
 } from "date-fns";
-import type {
-	GitHubActivityApiResponse,
-	GitHubActivityDay,
-	GitHubActivityMonthLabel,
-	GitHubActivityWeek,
-	WeekdayIndex,
-} from "~/types";
+
+type WeekdayIndex = 0 | 1 | 2 | 3 | 4 | 5 | 6; // 0 = Sunday, 1 = Monday etc.
+
+type GitHubActivityDay = {
+	date: string;
+	count: number;
+	level: 0 | 1 | 2 | 3 | 4;
+};
+
+type GitHubActivityWeek = Array<GitHubActivityDay | undefined>;
+
+type GitHubActivityApiResponse = {
+	total: {
+		[year: number]: number;
+		[year: string]: number; // 'lastYear;
+	};
+	contributions: Array<GitHubActivityDay>;
+	error?: string;
+};
+
+type GitHubActivityMonthLabel = {
+	weekIndex: number;
+	label: string;
+};
 
 interface Props {
 	username: string;
@@ -30,7 +47,7 @@ function range(n: number) {
 
 async function fetchData(
 	username: string,
-	year: number | "last"
+	year: number | "last",
 ): Promise<GitHubActivityApiResponse> {
 	function validateActivities(activities: Array<GitHubActivityDay>) {
 		if (activities.length === 0) {
@@ -96,7 +113,7 @@ function fillHoles(activities: Array<GitHubActivityDay>): Array<GitHubActivityDa
 
 function groupByWeeks(
 	activities: Array<GitHubActivityDay>,
-	weekStart: WeekdayIndex = 0 // 0 = Sunday
+	weekStart: WeekdayIndex = 0, // 0 = Sunday
 ): Array<GitHubActivityWeek> {
 	const normalizedActivities = fillHoles(activities);
 	// Determine the first date of the calendar. If the first date is not the
@@ -109,7 +126,7 @@ function groupByWeeks(
 	// because the first date might not be set start weekday.
 	const paddedActivities = [
 		...(Array(differenceInCalendarDays(firstDate, firstCalendarDate)).fill(
-			undefined
+			undefined,
 		) as Array<GitHubActivityDay>),
 		...normalizedActivities,
 	];
@@ -117,17 +134,19 @@ function groupByWeeks(
 
 	// Finally, group activities by week
 	return [...Array(numberOfWeeks).keys()].map((weekIndex) =>
-		paddedActivities.slice(weekIndex * 7, weekIndex * 7 + 7)
+		paddedActivities.slice(weekIndex * 7, weekIndex * 7 + 7),
 	);
 }
 
 function getMonthLabels(
 	weeks: Array<GitHubActivityWeek>,
-	monthNames: Array<string>
+	monthNames: Array<string>,
 ): Array<GitHubActivityMonthLabel> {
 	return weeks
 		.reduce<Array<GitHubActivityMonthLabel>>((labels, week, weekIndex) => {
-			const firstActivity = week.find((activity) => activity !== undefined);
+			const firstActivity = week.find(
+				(activity: GitHubActivityDay | undefined) => activity !== undefined,
+			);
 			if (!firstActivity) {
 				throw new Error(`Unexpected error: Week ${weekIndex + 1} is empty.`);
 			}
@@ -140,7 +159,7 @@ function getMonthLabels(
 			}
 			const prevLabel = labels[labels.length - 1];
 			if (weekIndex === 0 || !prevLabel || prevLabel.label !== month) {
-				return [...labels, { weekIndex, label: month }];
+				labels.push({ weekIndex, label: month });
 			}
 			return labels;
 		}, [])
@@ -182,7 +201,11 @@ const colorScale = calcColorScale(themeFromColorscheme, maxLevel + 1);
 const activities = data.contributions;
 
 const firstActivity = activities[0];
-const activityYear = getYear(parseISO(firstActivity.date));
+const activityYear = firstActivity
+	? getYear(parseISO(firstActivity.date))
+	: year === "last"
+		? new Date().getFullYear()
+		: Number(year);
 const weeks = groupByWeeks(activities, weekStart);
 // Provide a typed alias for use inside the template so we avoid putting
 // TypeScript annotations inside JSX expressions (Astro's template parser can
