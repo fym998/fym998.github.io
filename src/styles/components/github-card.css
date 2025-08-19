@@ -33,7 +33,7 @@
 			@apply flex items-center gap-x-1;
 			&:before {
 				@apply bg-global-text block h-5 w-5 content-[''];
-				mask: var(--chip-image) center center/16px auto no-repeat;
+				mask: var(--chip-image) center center / 16px auto no-repeat;
 			}
 		}
 		.gh-stars {
