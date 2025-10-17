@@ -19,6 +19,9 @@ pnpm-debug.log*
 # macOS-specific files
 .DS_Store
 
+# Obsidian files
+.obsidian/
+
 # misc
 *.pem
 .cache
