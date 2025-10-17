@@ -1,12 +1,12 @@
-import type { SiteConfig } from "@/types";
 import type { AstroExpressiveCodeOptions } from "astro-expressive-code";
+import type { SiteConfig } from "@/types";
 
 export const siteConfig: SiteConfig = {
 	// Used as both a meta property (src/components/BaseHead.astro L:31 + L:49) & the generated satori png (src/pages/og-image/[slug].png.ts)
-	author: "Chris Williams",
+	author: "fym998",
 	// Date.prototype.toLocaleDateString() parameters, found in src/utils/date.ts.
 	date: {
-		locale: "en-GB",
+		locale: "zh-Hans",
 		options: {
 			day: "numeric",
 			month: "short",
@@ -14,39 +14,43 @@ export const siteConfig: SiteConfig = {
 		},
 	},
 	// Used as the default description meta property and webmanifest description
-	description: "An opinionated starter theme for Astro",
+	description: "Fym998's Blog",
 	// HTML lang property, found in src/layouts/Base.astro L:18 & astro.config.ts L:48
-	lang: "en-GB",
+	lang: "zh-Hans",
 	// Meta property, found in src/components/BaseHead.astro L:42
-	ogLocale: "en_GB",
-	/* 
-		- Used to construct the meta title property found in src/components/BaseHead.astro L:11 
+	ogLocale: "zh_Hans",
+	/*
+		- Used to construct the meta title property found in src/components/BaseHead.astro L:11
 		- The webmanifest name found in astro.config.ts L:42
 		- The link value found in src/components/layout/Header.astro L:35
 		- In the footer found in src/components/layout/Footer.astro L:12
 	*/
-	title: "Astro Cactus",
+	title: "Fym998's Blog",
 	// ! Please remember to replace the following site property with your own domain, used in astro.config.ts
-	url: "https://astro-cactus.chriswilliams.dev/",
+	url: "https://fym998.github.io/",
 };
 
 // Used to generate links in both the Header & Footer.
 export const menuLinks: { path: string; title: string }[] = [
 	{
 		path: "/",
-		title: "Home",
+		title: "首页",
 	},
 	{
 		path: "/about/",
-		title: "About",
+		title: "关于",
 	},
 	{
 		path: "/posts/",
-		title: "Blog",
+		title: "博文",
 	},
 	{
 		path: "/notes/",
-		title: "Notes",
+		title: "小记",
+	},
+	{
+		path: "https://github.com/fym998/fym998.github.io",
+		title: "GitHub",
 	},
 ];
 
@@ -79,3 +83,30 @@ export const expressiveCodeOptions: AstroExpressiveCodeOptions = {
 	themes: ["dracula", "github-light"],
 	useThemedScrollbars: false,
 };
+
+/**
+	Uses https://www.astroicon.dev/getting-started/
+	Find icons via guide: https://www.astroicon.dev/guides/customization/#open-source-icon-sets
+*/
+export const socialLinks: {
+	friendlyName: string;
+	isWebmention?: boolean;
+	link: string;
+	iconName: string;
+}[] = [
+	{
+		friendlyName: "Email",
+		link: "mailto:fujun998@outlook.com",
+		iconName: "tabler:mail",
+	},
+	{
+		friendlyName: "Github",
+		link: "https://github.com/fym998",
+		iconName: "tabler:brand-github",
+	},
+	{
+		friendlyName: "bilibili",
+		link: "https://space.bilibili.com/443851006",
+		iconName: "tabler:brand-bilibili",
+	},
+];
